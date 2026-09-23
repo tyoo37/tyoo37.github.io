@@ -64,36 +64,63 @@ main {
   padding: 2.5rem 1.25rem 4rem;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+.hero-image {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  background: #f0f0f0;
 }
 
-.profile-photo {
+.home-columns {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.home-col-left,
+.home-col-right {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+.home-col-left .profile-photo {
   width: 160px;
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
   background: #f0f0f0;
   border: 1px solid var(--color-border);
+  margin-bottom: 1rem;
 }
 
-.profile-text h1 {
+.home-col-left h1 {
   margin: 0 0 0.25rem;
   font-size: 1.8rem;
 }
 
-.profile-text .title {
+.home-col-left .title {
   color: var(--color-muted);
   margin: 0 0 0.75rem;
 }
 
-.intro {
-  margin-top: 1.5rem;
-  max-width: 65ch;
+.home-col-right h2 {
+  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+}
+
+.home-col-right h2:not(:first-child) {
+  margin-top: 2rem;
+}
+
+.link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link-list li {
+  margin-bottom: 0.6rem;
 }
 
 section {
@@ -154,8 +181,7 @@ section h2 {
 }
 
 @media (max-width: 600px) {
-  .profile {
-    flex-direction: column;
+  .home-col-left {
     text-align: center;
   }
   .nav {
