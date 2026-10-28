@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W51 JWST Saturation Recovery - Taehwa Yoo</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">Taehwa Yoo</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="https://github.com/tyoo37" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>W51 JWST saturation recovery</h1>
+    <p>
+      The brightest parts of the star-forming region W51 saturated the JWST NIRCam and MIRI detectors (program GO 6151):
+      those pixels collected more light than the detector can record, and the pipeline left many of them without a value.
+      This project restores them, using what each detector kept: the reads before saturation, the first read,
+      the detector's response curve, the shape of stars, and the other filters.
+      The notebooks below record the progress, newest stage last. Each opens as a page with its figures.
+    </p>
+
+    <h2>Start here: the current state</h2>
+    <div class="nb-cards">
+      <a class="nb-card" href="w51-saturation/report_restoration_20261027.html">
+        <span class="nb-date">2026-10-27</span>
+        <span class="nb-title">Restoring the saturated pixels</span>
+        <span class="nb-summary">The methods, the restored NIRCam and MIRI images, and checks of their accuracy.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/saturated_pixel_kinds_20261028.html">
+        <span class="nb-date">2026-10-28</span>
+        <span class="nb-title">Kinds of saturated pixels</span>
+        <span class="nb-summary">Five kinds of saturated pixels, their share in each filter, and the method used for each.</span>
+      </a>
+    </div>
+
+    <h2>1. A training set for the star model</h2>
+    <p>Saturated stars are restored by fitting the known star shape to their unsaturated wings. These notebooks build and audit the training set of such fits.</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="w51-saturation/report_training_set_audit_20261016.html">
+        <span class="nb-date">2026-10-16</span>
+        <span class="nb-title">Training-set audit</span>
+        <span class="nb-summary">Two label bugs found and fixed in the first run; which saturated regions to keep.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_v2_training_set_20261020.html">
+        <span class="nb-date">2026-10-20</span>
+        <span class="nb-title">v2 training set</span>
+        <span class="nb-summary">The training set regenerated for all 15 filters after the fixes.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_v3_training_set_20261021.html">
+        <span class="nb-date">2026-10-21</span>
+        <span class="nb-title">v3 training set</span>
+        <span class="nb-summary">Further label fixes (flux errors, hot pixels) and their effect.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/discussion_20261021.html">
+        <span class="nb-date">2026-10-21</span>
+        <span class="nb-title">Questions and answers</span>
+        <span class="nb-summary">The questions raised while building the training set, with the answers and the evidence.</span>
+      </a>
+    </div>
+
+    <h2>2. Label validation and the first model</h2>
+    <p>How good the fitted labels are, and the first machine-learning model trained on them.</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="w51-saturation/next_steps_20261022.html">
+        <span class="nb-date">2026-10-22</span>
+        <span class="nb-title">Next steps explained</span>
+        <span class="nb-summary">The open items, one at a time, each with background, proposal, cost and decision.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/discussion_20261022.html">
+        <span class="nb-date">2026-10-22</span>
+        <span class="nb-title">Discussion</span>
+        <span class="nb-summary">Answers to the next-steps items; a fit-mask bug that never masked saturated pixels.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_label_validation_20261022.html">
+        <span class="nb-date">2026-10-22</span>
+        <span class="nb-title">Label validation</span>
+        <span class="nb-summary">How well the star fits predict pixels they could not use, and which fit design is best.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/discussion_20261023.html">
+        <span class="nb-date">2026-10-23</span>
+        <span class="nb-title">Discussion</span>
+        <span class="nb-summary">The decisions implemented, and whether an empirical PSF beats the model PSF.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_area_ratio_gallery_20261023.html">
+        <span class="nb-date">2026-10-23</span>
+        <span class="nb-title">Choosing the area-ratio threshold</span>
+        <span class="nb-summary">A gallery of fits to find where the star fit visibly fails.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_first_model_20261023.html">
+        <span class="nb-date">2026-10-23</span>
+        <span class="nb-title">First model</span>
+        <span class="nb-summary">The first model trained on the v4 training set.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/next_steps_ml_20261023.html">
+        <span class="nb-date">2026-10-23</span>
+        <span class="nb-title">Predicting the brightest stars</span>
+        <span class="nb-summary">Why predictions for the brightest stars come out too low, and what to try next.</span>
+      </a>
+    </div>
+
+    <h2>3. The first read and the v5 model</h2>
+    <p>NIRCam keeps a first read of every pixel; using it restores many pixels directly.</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="w51-saturation/discussion_20261025.html">
+        <span class="nb-date">2026-10-25</span>
+        <span class="nb-title">Brighter-fatter effect and ramp trends</span>
+        <span class="nb-summary">Whether the star shape changes for bright stars, and extrapolating the ramp.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_v5_20261025.html">
+        <span class="nb-date">2026-10-25</span>
+        <span class="nb-title">v5: first read, new labels, line + trees model</span>
+        <span class="nb-summary">Restoring from the first read, and the new model tested on brightness bands.</span>
+      </a>
+    </div>
+
+    <h2>4. Restoring every saturated pixel</h2>
+    <p>The saturated extended emission of W51, the full restoration of 7 filters, and how good it is.</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="w51-saturation/discussion_20261026.html">
+        <span class="nb-date">2026-10-26</span>
+        <span class="nb-title">Filling the saturated diffuse emission in MIRI</span>
+        <span class="nb-summary">Reading the detector response curve backwards for the bright MIRI regions.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/next_steps_20261026.html">
+        <span class="nb-date">2026-10-26</span>
+        <span class="nb-title">Can we restore every saturated pixel?</span>
+        <span class="nb-summary">A census of all 14.7 million saturated pixels and a plan for each kind.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/report_restoration_20261027.html">
+        <span class="nb-date">2026-10-27</span>
+        <span class="nb-title">Restoring the saturated pixels</span>
+        <span class="nb-summary">The methods, the restored NIRCam and MIRI images, and checks of their accuracy.</span>
+      </a>
+      <a class="nb-card" href="w51-saturation/saturated_pixel_kinds_20261028.html">
+        <span class="nb-date">2026-10-28</span>
+        <span class="nb-title">Kinds of saturated pixels</span>
+        <span class="nb-summary">Five kinds of saturated pixels, their share in each filter, and the method used for each.</span>
+      </a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Taehwa Yoo</p>
+    <p>Built with the help of <a href="https://claude.com" target="_blank" rel="noopener">Claude</a>.</p>
+  </footer>
+
+</body>
+</html>

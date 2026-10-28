@@ -189,3 +189,40 @@ section h2 {
     gap: 0.75rem;
   }
 }
+
+/* W51 saturation-recovery portal: one card per notebook */
+.nb-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.nb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.nb-card:hover {
+  border-color: var(--color-accent);
+}
+
+.nb-date {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.nb-title {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.nb-summary {
+  font-size: 0.95rem;
+}
